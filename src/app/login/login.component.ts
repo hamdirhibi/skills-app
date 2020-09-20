@@ -18,7 +18,6 @@ export class LoginComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    localStorage.setItem('accessToken','token');
 
   }
 
@@ -26,11 +25,11 @@ export class LoginComponent implements OnInit {
     if (  this.username  ===''  ||  this.password ==='')
       this.showRequiredWarning()
     else {
-      this.loginService.signIn({ username : this.username , password : this.password }).subscribe(data=>{
+      this.loginService.signIn({ username : this.username , password : this.password }).subscribe(async data=>{
         console.log(data)
-        localStorage.setItem('accessToken',data['accessToken']);
-        localStorage.setItem('roles',data['roles'][0]);
-        window.location.replace('/users')
+        await localStorage.setItem('accessToken',data['accessToken']);
+        await localStorage.setItem('roles',data['roles'][0]);
+        window.location.replace('/users');
       },err =>{
         this.showUnauthetificateError() ; 
       })

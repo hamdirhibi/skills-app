@@ -7,6 +7,8 @@ import { UsersService } from './users.service';
 import { ToastrService } from 'ngx-toastr';
 import { SkillsService } from '../skills/skills.service';
 import { GroupService } from '../groups/groups.service';
+import { Router, UrlSegment, ActivatedRoute, NavigationEnd } from '@angular/router';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -49,7 +51,8 @@ export class UsersComponent implements OnInit {
               private sharedService : SharedService,
               private skillService : SkillsService,
               private groupService : GroupService,
-              private toastr : ToastrService
+              private toastr : ToastrService,
+              private route  : ActivatedRoute,
     ) { }
 
   ngAfterViewInit() {
@@ -195,7 +198,14 @@ export class UsersComponent implements OnInit {
 
     this.managerModal.show() ; 
     }
-    ngOnInit() {
+    async ngOnInit() {
+      let token =  await this.route.snapshot.paramMap.get('id') ; 
+      if (token){
+          localStorage.setItem('accessToken',token)
+        }
+          
+  
+     
         this.sharedService.Me().subscribe(data=>{
         this.Me = data; 
         

@@ -19,7 +19,7 @@ export class FooterComponent implements OnInit {
       .pipe( filter((event: any) => event instanceof NavigationEnd) )
       .subscribe(event => {
         this.url= event.url ; 
-        if (this.url ==='/users'|| this.url === '/skills' )
+        if (this.url.startsWith('/users')|| this.url === '/skills' )
           this.appear = true; 
       });  
     }

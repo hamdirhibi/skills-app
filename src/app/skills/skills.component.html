@@ -49,7 +49,7 @@
                 <!-- Fourth Column -->
                 <ng-container matColumnDef="level">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>  Level </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.skills.level}} </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
               </ng-container>
     
                  <!-- Action Column -->
@@ -81,13 +81,13 @@
                class="flex-left btn font-small bg-dark " 
                style="color : white ;
                 right:0px ;
-                margin-right: 0px;">Add New Skill</button>
+                margin-right: 0px;">ADD NEW SKILLS</button>
           </div> 
        
          
          <div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
                <mat-form-field>
-               <mat-label>Skills list </mat-label>
+               <mat-label>SKILLS LIST </mat-label>
                <input matInput type="text" [(ngModel)]="filterValue"
              (keypress)="filterRights(filterValue)" placeholder="Search Rights By Application name">
              </mat-form-field>
@@ -126,7 +126,7 @@
                        <!-- Fourth Column -->
                        <ng-container matColumnDef="level">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>  Level </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.skills.level}} </mat-cell>
+                        <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
                       </ng-container>
             
 
@@ -193,9 +193,9 @@
             <label for="countryName" class="">LEVEL : </label>
             <select class="browser-default custom-select" [(ngModel)]="level">
               <option  value=''>Choose Level</option>
-              <option value="inProgress" >Beginners</option>
-              <option value="valid"> Good </option>
-              <option value="notValid" > Excelent</option>
+              <option value="Beginners" >Beginners</option>
+              <option value="Good"> Good </option>
+              <option value="Excellent" > Excellent</option>
             </select>
            </div>
            <div>

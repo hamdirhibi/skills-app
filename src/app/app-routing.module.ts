@@ -9,6 +9,8 @@ const routes: Routes = [
 }, 
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) }, 
   { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule)  ,canActivate: [AuthGuardService] },
+  { path: 'users/:id', loadChildren: () => import('./users/users.module').then(m => m.UsersModule)  ,canActivate: [AuthGuardService] },
+
   { path: '404', component: ErrorPageComponent},
   // { path: 'rights', loadChildren: () => import('./rights/rights.module').then(m => m.RightsModule)  ,canActivate: [AuthGuardService] },
   // { path: 'groups', loadChildren: () => import('./groups/groups.module').then(m => m.GroupsModule)  ,canActivate: [AuthGuardService] },
