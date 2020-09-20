@@ -1,0 +1,199 @@
+<div class="container" style="min-height: 500px;">
+  <div style="margin-top: 30px;"> 
+    <button  
+    (click)="addGroup()" 
+    mdbWavesEffect 
+    class="flex-left btn font-small bg-dark " 
+    style="color : white ;
+     right:0px ;
+     margin-right: 0px;">Add New Group</button>
+</div>   
+  
+  
+  <div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
+        <!-- <mat-form-field>
+        <mat-label>Groups </mat-label>
+        <input matInput type="text" 
+        [(ngModel)]="filterValue"
+      (keypress)="filterGroups(filterValue)" placeholder="Search Groups By  name">
+      </mat-form-field> -->
+      <div class="spinner-container" *ngIf="!dataSource">
+              <mat-spinner></mat-spinner>
+          </div>
+      
+              <mat-table #table [dataSource]="dataSource" matSort>
+                <!-- First Column ID-->
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+      
+                <!-- Second Column -->
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+      
+
+               
+                <!-- Third Column -->
+                <ng-container matColumnDef="rights" >
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Rights  </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <div class="form-group" *ngFor="let tag of element.rights">
+                            <div class="chip" >
+                                {{tag?.right?.applicationName}} 
+                                <span class="closebtn" 
+                                (click)="deleteRights(element.id,tag?.right?.id)" >&times;</span>
+                              </div>
+                              
+                    </div>
+                  </mat-cell>
+                </ng-container>
+            
+                <!-- Action Column -->
+                <ng-container matColumnDef="add">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Add </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Add" class="iconbutton"
+                        color="primary" (click)="add(element)" mdbWavesEffect>
+                        <mat-icon>add</mat-icon>
+                      </button> </mat-cell>
+                  </ng-container>
+  
+                <ng-container matColumnDef="edit">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
+                      color="primary" (click)="edit(element)">
+                      <mat-icon>update </mat-icon>
+                    </button> </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+                      (click)="delete(element.id)" color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button> </mat-cell>
+                </ng-container>
+      
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+      
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      
+            </div>
+    
+        </div>
+    
+
+
+  <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+  <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
+
+<div mdbModal #addRight="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="addRight.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Add New Right</h4>
+      </div>
+      <div class="modal-body">
+        <select class="browser-default custom-select" [(ngModel)]="rightId" (ngModelChange)="change($event)">
+          <option value="-1" > Choose Right</option>
+          <option *ngFor="let v of rights" [value]="v['id']" >{{v['applicationName']}}</option>
+        </select>
+        <div >
+          <label style="color:red" *ngIf="requiredRight">Choose one Right ! </label>
+      </div>
+
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" 
+        (click)="addRight.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative bg-dark" 
+        (click)="saveRights()" mdbWavesEffect>Save </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!---------------------------------------------AFFECT RIGHT MODAL CONTENT------------------------------------------------------->
+ 
+
+  <!---------------------------------------------ADD GROUP MODAL CONTENT------------------------------------------------------->
+  <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
+
+<div mdbModal #groupModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="groupModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Update group Name</h4>
+      </div>
+      <div class="modal-body">
+                <!-- app name -->
+                <div class="md-form">
+                    <input type="text" 
+                      [(ngModel)]="groupName" 
+                      id="defaultContactFormName2" 
+                      class="form-control mb-4"
+                      placeholder="Group Name " >
+                 </div>
+                 <div >
+                  <label style="color:red" *ngIf="requiredGroupName">Name required ! </label>
+             </div>
+      
+      
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="groupModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative bg-dark" (click)="saveGroup()" mdbWavesEffect>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+
+
+    <!---------------------------------------------ADD GROUP MODAL CONTENT------------------------------------------------------->
+  <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
+
+<div mdbModal #editgroupModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="editgroupModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Update group Name</h4>
+      </div>
+      <div class="modal-body">
+                <!-- app name -->
+                <div class="md-form">
+                    <input type="text" 
+                      [(ngModel)]="name" 
+                      id="defaultContactFormName" 
+                      class="form-control mb-4"
+                      placeholder="Group Name " >
+                 </div>
+                 <div >
+                  <label style="color:red" *ngIf="requiredGroupName">Name required ! </label>
+             </div>
+      
+      
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="editgroupModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative bg-dark" (click)="saveUpdatingName()" mdbWavesEffect>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!---------------------------------------------MODAL CONTENT------------------------------------------------------->

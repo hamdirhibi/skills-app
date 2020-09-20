@@ -1,0 +1,59 @@
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark bg-dark" [containerInside]="false" *ngIf="appear">
+
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" href="#">WEB-PORTAL</a></mdb-navbar-brand>
+  
+    <!-- Collapsible content -->
+    <links>
+  
+      <!-- Links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active" *ngIf="url=='/users'" >
+          <a class="nav-link waves-light" [routerLink]="['/users']" mdbWavesEffect><mdb-icon fas icon="user-cog"></mdb-icon>Users</a>
+        </li>
+        <li class="nav-item" *ngIf="url!=='/users'" >
+            <a class="nav-link waves-light" [routerLink]="['/users']" mdbWavesEffect><mdb-icon fas icon="user-cog"></mdb-icon>Users</a>
+        </li>
+        <!-- <li class="nav-item active" *ngIf="url=='/groups'&&Role_ADMIN_Exist">
+          <a class="nav-link waves-light" [routerLink]="['/groups']" mdbWavesEffect><mdb-icon fas icon="layer-group"></mdb-icon>Groups</a>
+        </li>
+        <li class="nav-item" *ngIf="url!=='/groups'&&Role_ADMIN_Exist">
+            <a class="nav-link waves-light" [routerLink]="['/groups']" mdbWavesEffect><mdb-icon fas icon="layer-group"></mdb-icon>Groups</a>
+        </li> -->
+
+          <!-- <li class="nav-item active" *ngIf="url=='/rights'&&Role_ADMIN_Exist">
+            <a class="nav-link waves-light" [routerLink]="['/rights']" mdbWavesEffect><mdb-icon fas icon="registered"></mdb-icon>Rights</a>
+          </li>
+          <li class="nav-item" *ngIf="url!=='/rights'&&Role_ADMIN_Exist">
+              <a class="nav-link waves-light" [routerLink]="['/rights']"  mdbWavesEffect><mdb-icon fas icon="registered"></mdb-icon>Rights</a>
+          </li> -->
+          <!-- <li class="nav-item active" *ngIf="url=='/myrights'&&Role_ADMIN_Exist==false">
+            <a class="nav-link waves-light" [routerLink]="['/myrights']" mdbWavesEffect><mdb-icon fas icon="registered"></mdb-icon>Rights</a>
+          </li>
+          <li class="nav-item"  *ngIf="url!='/myrights'&&Role_ADMIN_Exist==false">
+              <a class="nav-link waves-light" [routerLink]="['/myrights']"  mdbWavesEffect><mdb-icon fas icon="registered"></mdb-icon>Rights</a>
+          </li> -->
+
+          <li class="nav-item active" *ngIf="url=='/skills'">
+            <a class="nav-link waves-light" [routerLink]="['/skills']" mdbWavesEffect><mdb-icon fas icon="star"></mdb-icon>SKILLS</a>
+          </li>
+          <li class="nav-item" *ngIf="url!=='/skills'">
+              <a class="nav-link waves-light" [routerLink]="['/skills']" mdbWavesEffect><mdb-icon fas icon="star"></mdb-icon>SKILLS</a>
+          </li>
+
+          <li class="nav-item" >
+            <a class="nav-link waves-light" (click)="logout()" mdbWavesEffect><mdb-icon fas icon="sign-out-alt"></mdb-icon>LOG OUT</a>
+          </li>
+
+
+
+        <!-- Dropdown -->
+      
+      </ul>
+      <!-- Links -->
+    </links>
+    <!-- Collapsible content -->
+  
+  </mdb-navbar>
+  <!--/.Navbar-->

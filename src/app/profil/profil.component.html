@@ -1,0 +1,124 @@
+<div id="accordion" class="container" style="margin-top:50px;margin-bottom: 50px;min-height: 500px;">
+    <div class="panel-heading">
+      <h3 class="panel-title"><strong> Profil Management :  </strong></h3>
+    </div>
+  
+    
+    <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              First Name    <i class="fa fa-chevron-down fa-1x"></i>
+            </button>
+          </h5>
+        </div>
+    
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+              <div class="form-group " >
+                  <label for="countryName" class="">First Name   :  </label>
+                  <input type="text" name="firstName" id="product name" class="form-control input-sm" [(ngModel)]="Me?.user.firstName" placeholder="First Name">
+                </div>
+                    
+            <div>
+                    <label style="color:red" *ngIf="requiredFirstName">First Name required ! </label>
+            </div>
+                <input type="submit" value="Update Name"  (click)="updateFirstName()"class="btn btn-info btn-block">
+            </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Last Name    <i class="fa fa-chevron-down fa-1x"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body">
+              <div class="form-group " >
+                  <label for="countryName" class="">Last Name:  </label>
+                  <input type="text" name="Price" id="produt price" class="form-control input-sm" [(ngModel)]="Me?.user.lastName" placeholder="Last Name " >
+                </div>
+                 <div>
+                    <label style="color:red" *ngIf="requiredlastName">Last Name required ! </label>
+                 </div>
+           
+                <input type="submit" value="Update Last Name"  (click)="updateLastName()"class="btn btn-info btn-block">
+  
+            </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingfour">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapseFive">
+              Username    <i class="fa fa-chevron-down fa-1x"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="collapsefour" class="collapse" aria-labelledby="headingfour" data-parent="#accordion">
+          <div class="card-body">
+              <div class="form-group " >
+                  <label for="username" class="">Username:  </label>
+                  <input type="text" name="username" id="username" class="form-control input-sm"  readonly [(ngModel)]="Me?.user.username" placeholder="Username" >
+                </div>
+                <!-- <div>
+                    <label style="color:red" *ngIf="requiredusername">Username required ! </label>
+                 </div> -->
+                <!-- <input type="submit" value="Update Username"  (click)="updateUsername()"class="btn btn-info btn-block"> -->
+  
+            </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingFive">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+              Email    <i class="fa fa-chevron-down fa-1x"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+          <div class="card-body">
+              <div class="form-group " >
+                  <label for="username" class="">Email:  </label>
+                  <input type="email" name="email" id="email" class="form-control input-sm" [(ngModel)]="Me?.user.email" placeholder="Email" >
+                </div>
+                <div>
+                    <label style="color:red" *ngIf="requiredemail">Email required ! </label>
+                 </div>
+                <input type="submit" value="Update Email"  (click)="updateEmail()"class="btn btn-info btn-block">
+  
+            </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingsex">
+          <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSex" aria-expanded="false" aria-controls="collapseFive">
+              Skills    <i class="fa fa-chevron-down fa-1x"></i>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseSex" class="collapse" aria-labelledby="headingsex" data-parent="#accordion">
+          <div class="card-body">
+              <div class="form-group " >
+                  <label for="username" class="">Skills:  </label>
+                  <div class="form-group" *ngFor="let tag of Me?.user.roles">
+                    <div class="chip" >
+                        {{tag.name}} 
+                         </div>
+                      
+            </div>
+
+
+                </div>
+              
+            </div>
+        </div>
+      </div>
+
+
+</div>  

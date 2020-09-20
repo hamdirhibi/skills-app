@@ -1,0 +1,143 @@
+<div class="container" *ngIf="show" style="min-height: 500px;">
+   <div style="margin-top: 30px;;"> 
+        <button  (click)="add()" mdbWavesEffect class="flex-left btn font-small bg-dark " style="color : white ; right:0px ; margin-right: 0px;">Add New Rights</button>
+   </div> 
+
+  
+  <div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
+        <!-- <mat-form-field>
+        <mat-label>RIGHTS</mat-label>
+        <input matInput type="text" [(ngModel)]="filterValue"
+      (keypress)="filterRights(filterValue)" placeholder="Search Rights By Application name">
+      </mat-form-field> -->
+      <div class="spinner-container" *ngIf="!dataSource">
+              <mat-spinner></mat-spinner>
+          </div>
+      
+              <mat-table #table [dataSource]="dataSource" matSort>
+                <!-- First Column ID-->
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+      
+                <!-- Second Column -->
+                <ng-container matColumnDef="applicationName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Application Name </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.applicationName}} </mat-cell>
+                </ng-container>
+      
+                <!-- Third Column -->
+                <ng-container matColumnDef="hostName" >
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Hostname  </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                      {{element.hostName}}
+                  </mat-cell>
+                </ng-container>
+            
+                <!-- Action Column -->
+                
+                <ng-container matColumnDef="edit">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
+                      color="primary" (click)="edit(element)">
+                      <mat-icon>update </mat-icon>
+                    </button> </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="delete">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+                      (click)="delete(element.id)" color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button> </mat-cell>
+                </ng-container>
+      
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+      
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      
+            </div>
+    
+        </div>
+  
+
+  <!--------------------------------------------- ADD MODAL CONTENT------------------------------------------------------->
+  <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
+
+  <div mdbModal #addRight="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="addRight.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">Add New Right</h4>
+        </div>
+        <div class="modal-body">
+         
+          <!-- app name -->
+          <div class="md-form">
+         <input type="text" id="defaultContactFormName" class="form-control mb-4" [(ngModel)]="rightName" placeholder="Name ">
+          </div>
+                  
+          <!-- hostname -->
+          <div class="md-form">
+         <input type="text" id="defaultHostname" class="form-control mb-4" [(ngModel)]="hostname"  placeholder="Hostname">
+          </div>
+          <div >
+            <label style="color:red" *ngIf="requiredRight">Fill all informations ! </label>
+           </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="addRight.hide()" mdbWavesEffect>Close</button>
+          <button type="button" mdbBtn color="primary" class="relative bg-dark" (click)="saveRight()" mdbWavesEffect>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+  
+
+
+  <!---------------------------------------------EDIT MODAL CONTENT------------------------------------------------------->
+  <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
+
+  <div mdbModal #editRight="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="editRight.hide()">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel">Edit Right</h4>
+        </div>
+        <div class="modal-body">
+       
+        
+          <!-- app name -->
+          <div class="md-form">
+         <input type="text" id="defaultContactFormName" class="form-control mb-4" [(ngModel)]="rightName" placeholder="Application Name  ">
+          </div>
+          <!-- hostname -->
+          <div class="md-form">
+            <input type="text" id="defaultContactFormName" class="form-control mb-4" [(ngModel)]="hostname" placeholder="Host Name  ">
+             </div>
+          <div >
+            <label style="color:red" *ngIf="requiredRight">all fields required ! </label>
+           </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="editRight.hide()" mdbWavesEffect>Close</button>
+          <button type="button" mdbBtn color="primary" class="relative bg-dark" (click)="editRights()" mdbWavesEffect>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+  

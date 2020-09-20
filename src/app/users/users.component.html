@@ -1,0 +1,301 @@
+<div class="container" *ngIf="Role_Admin_Exist===true" style="min-height: 500px;">
+  <!-- <div style="margin-top: 30px;"> 
+    <button  (click)="add()" mdbWavesEffect class="flex-left btn font-small  bg-dark  " 
+    style="color : white ; right:0px ; margin-right: 0px;" >ADD NEW USER</button>
+</div>  -->
+<div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
+    <!-- <mat-form-field>
+    <mat-label>Filter Users</mat-label>
+    <input matInput type="text" [(ngModel)]="filterValue"
+  (keydown)="filterUser(filterValue)" placeholder="Search User By name">
+  </mat-form-field> -->
+  <div class="spinner-container" *ngIf="!dataSource">
+          <mat-spinner></mat-spinner>
+      </div>
+  
+          <mat-table #table [dataSource]="dataSource" matSort >
+            <!-- First Column ID-->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element['user'].id}} </mat-cell>
+            </ng-container>
+  
+            <!-- Second Column -->
+            <ng-container matColumnDef="username">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element['user'].username}} </mat-cell>
+            </ng-container>
+  
+            <!-- Third Column -->
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> email </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <div class="form-group">
+                 {{element['user'].email}}
+                </div>
+              </mat-cell>
+            </ng-container>
+              
+
+            <!-- Action Column -->
+            
+            <ng-container matColumnDef="view">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Skills </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to View User Skills" class="iconbutton"
+                  color="primary" (click)="edit(element['user'])">
+                  <mat-icon>remove_red_eye </mat-icon>
+                </button> </mat-cell>
+            </ng-container>
+
+            <ng-container  matColumnDef="managerId" >
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Manager </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to add User Manager" class="iconbutton"
+                  color="primary" (click)="managerOpen(element['user'],element['manager'])">
+                  <mat-icon *ngIf="element['manager']==null" >add </mat-icon>
+                  <p *ngIf="element.manager!=null">{{element.manager.username}}</p>
+                </button> </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="delete">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+              <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+                  (click)="delete(element['user'].id)" color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button> </mat-cell>
+            </ng-container>
+  
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+  
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  
+        </div>
+
+    </div>
+      <!---------------------------------------------Member Content------------------------------------------------------->
+
+    <div class="container" *ngIf="Role_Admin_Exist===false" style="min-height: 500px;" >
+           
+          <div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
+              <!-- <mat-form-field>
+              <mat-label>Filter Users</mat-label>
+              <input matInput type="text" [(ngModel)]="filterValue"
+                (keydown)="filterUser(filterValue)" placeholder="Search User By name">
+            </mat-form-field> -->
+            <div class="spinner-container" *ngIf="!dataSource">
+                <mat-spinner></mat-spinner>
+            </div>
+      
+              <mat-table #table [dataSource]="dataSource" matSort>
+                <!-- First Column ID-->
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+      
+                <!-- Second Column -->
+                <ng-container matColumnDef="username">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+                </ng-container>
+      
+                <!-- Third Column -->
+                <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> email </mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    {{element.email}}
+                  </mat-cell>
+                </ng-container>
+                  
+    
+                <!-- Action Column -->
+                
+                <ng-container matColumnDef="view">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Skills </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to View User Skills" class="iconbutton"
+                      color="primary" (click)="edit(element)">
+                      <mat-icon>remove_red_eye </mat-icon>
+                    </button> </mat-cell>
+                </ng-container>
+    
+              
+                 <ng-container  matColumnDef="managerId" >
+                  <mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;"> Manager </mat-header-cell>
+                  <mat-cell *matCellDef="let element" style="display: none;"> <button mat-icon-button matTooltip="Click to View User Manager" class="iconbutton"
+                      color="primary" (click)="managerOpen(element['user'],element['manager'])">
+                      <mat-icon *ngIf="element.manager===null" >add </mat-icon>
+                      <p *ngIf="element.manager">{{element.manager.username}}</p>
+                    </button> </mat-cell>
+                </ng-container> 
+    
+    
+                <ng-container matColumnDef="delete" >
+                  <mat-header-cell *matHeaderCellDef mat-sort-header style="display: none;"> Delete </mat-header-cell>
+                  <mat-cell *matCellDef="let element" style="display: none;"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+                      (click)="delete(element.id)" color="warn">
+                      <mat-icon>login</mat-icon>
+                    </button> </mat-cell>
+                </ng-container>
+      
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
+      
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      
+            </div>
+    
+        </div>
+    
+    
+      <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+
+  <div mdbModal #addUser="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark" >
+          <button type="button" class="close pull-right " aria-label="Close" (click)="addUser.hide()">
+            <span aria-hidden="true" style="color : white">×</span>
+          </button>
+          <h4 class="modal-title w-100" style="color : white" id="myModalLabel">ADD NEW USER</h4>
+        </div>
+        <div class="modal-body">
+        
+          <!-- First Name -->
+          <div class="md-form">
+         <input type="text" class="form-control mb-4" placeholder="First Name" [(ngModel)]="firstName" >
+          </div>
+          <!-- Last Name -->
+          <div class="md-form">
+          <input type="text"  class="form-control mb-4" placeholder="Last Name" [(ngModel)]="lastName">
+          </div>
+          <!-- username -->
+          <div class="md-form">
+            <input type="text"  class="form-control mb-4" placeholder="Username" [(ngModel)]="username">
+          </div>
+          <!-- Email -->
+          <div class="md-form">
+            <input type="email"class="form-control mb-4" placeholder="Email" [(ngModel)]="email">
+          </div>
+         <!-- username -->
+         <div class="md-form">
+            <input type="password"  class="form-control mb-4" placeholder="password" [(ngModel)]="password">
+         </div>
+
+              
+                  
+          <!-- Groups -->
+          <select class="browser-default custom-select" [(ngModel)]="groupe">
+            <option value="-1" > Choose Group</option>
+            <option *ngFor="let v of groups" [value]="v['id']" >{{v['name']}}</option>
+          </select>
+          
+
+          <div >
+            <label style="color:red" *ngIf="requiredItems">You have to fill all informations ! </label>
+          </div>
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="info" class="waves-light" aria-label="Close" (click)="addUser.hide()" mdbWavesEffect>Close</button>
+          <button type="button" mdbBtn color="dark" class="relative bg-dark" (click)="saveUser()" mdbWavesEffect>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+  
+
+    <!---------------------------------------------EDIT MODAL CONTENT------------------------------------------------------->
+
+  <div mdbModal #editUser="mdbModal" class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="editUser.hide()">
+            <span aria-hidden="true" style="color: white">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel" style="color: white">EDIT USER SKILLS</h4>
+        </div>
+        <div class="modal-body">
+         
+            <div class="card"  *ngFor="let s of SecondUser?.userSkills">
+              <div class="card-header" [attr.id]=" 'suffix' + s.id">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" [attr.data-target]="'#' + 'prefix' + s.id" aria-expanded="true" [attr.aria-controls]="'#' + 'prefix' + s.id">
+                 {{s.skills.name}}   <i class="fa fa-chevron-down fa-1x"></i>
+                  </button>
+                </h5>
+              </div>
+              <div [attr.id]=" 'prefix' + s.id" class="collapse show" [attr.aria-labelledby]=" 'suffix' + s.id" [attr.data-parent]="'#'+ 'suffix' + s.id">
+                <div class="card-body">
+
+                  <div class="form-group " >
+                    <label for="level" class="">Level:  </label>
+
+                    <input type="text" name="level" id="level" class="form-control input-sm" [value]="s.skills.level" readonly >
+                  </div>
+
+                  <div class="form-group " >
+                    <label for="countryName" class="">status:  </label>
+                    <select class="browser-default custom-select" [(ngModel)]="mp[s.id]">
+                      <option value="inProgress" >inProgress</option>
+                      <option value="valid" >  valid</option>
+                      <option value="notValid" > notValid</option>
+                    </select>
+                </div>
+                  <input type="submit" 
+                  class="btn btn-dark bg-dark btn-block" 
+                  value="Update Skill"
+                  (click)="editSkillState(s.id)">
+                  </div>
+              </div>
+            </div>  
+        </div>
+       
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="dark" class="relative bg-dark"  aria-label="Close" (click)="editUser.hide()" mdbWavesEffect>Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--------------------------------------------- EDIT MODAL CONTENT------------------------------------------------------->
+  
+
+        <!---------------------------------------------User Manager MODAL CONTENT------------------------------------------------------->
+
+  <div mdbModal #managerModal="mdbModal" class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="managerModal.hide()">
+            <span aria-hidden="true" style="color:white">×</span>
+          </button>
+          <h4 class="modal-title w-100" id="myModalLabel" style="color:white">UPDATE USER MANAGER</h4>
+        </div>
+        <div class="modal-body">
+          <select class="browser-default custom-select" [(ngModel)]="managerId">
+            <option value="-1" > Choose Manager</option>
+
+            <option *ngFor="let o of UsersToSelect" [value]="o.id" >{{o.username}}</option>
+          </select>
+
+          <div >
+            <label style="color:red" *ngIf="requiredmanagerID">Please chose Manager ! </label>
+          </div>
+
+
+       </div>
+
+        <div class="modal-footer">
+          <button type="button" mdbBtn color="info" class="waves-light" aria-label="Close" (click)="managerModal.hide()" mdbWavesEffect>Close</button>
+          <button type="button" mdbBtn color="dark" class="relative bg-dark" (click)="updateManager()" mdbWavesEffect>Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!--------------------------------------------- EDIT MODAL CONTENT------------------------------------------------------->
+  
