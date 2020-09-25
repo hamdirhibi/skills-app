@@ -12,7 +12,8 @@ import { SharedService } from 'src/app/Services/shared.service';
 export class NavbarComponent implements OnInit {
   appear : boolean = false ; 
   url;
-  Role_ADMIN_Exist: boolean =false  ;  
+  Role_ADMIN_Exist: boolean =false  ; 
+  MANAGER : boolean = false;  
   constructor(private router: Router,
     private activatedRoute: ActivatedRoute,
     private sharedService : SharedService
@@ -24,21 +25,24 @@ export class NavbarComponent implements OnInit {
             if (data['user'].roles[i].name ==='ROLE_ADMIN')
               this.Role_ADMIN_Exist = true ; 
         }
+        if (data['team'].length>0)
+          this.MANAGER = true;  
       })
       this.router.events
       .pipe( filter((event: any) => event instanceof NavigationEnd) )
       .subscribe(event => {
         this.url= event.url ; 
-        if (this.url.startsWith('/users')|| this.url === '/skills' )
+        if (this.url.startsWith('/skills')|| this.url === '/users' )
           this.appear = true; 
       });  
       
     }
 
     logout(){
+    window.location.replace('http://localhost:4200/myrights/'+localStorage.getItem('accessToken'));
     localStorage.removeItem('accessToken')  
-      window.location.replace('/login');
-     }
+
+  }
   
 
 }

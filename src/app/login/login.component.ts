@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         console.log(data)
         await localStorage.setItem('accessToken',data['accessToken']);
         await localStorage.setItem('roles',data['roles'][0]);
-        window.location.replace('/users');
+        window.location.replace('/skills');
       },err =>{
         this.showUnauthetificateError() ; 
       })

@@ -14,6 +14,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 import {  HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NotfoundpageComponent } from './notfoundpage/notfoundpage.component';
 
 const   apiUrl: string = environment.api;
 const   domain: string = environment.base;
@@ -26,6 +27,7 @@ const   domain: string = environment.base;
     NavbarComponent,
     FooterComponent,
     ErrorPageComponent,
+    NotfoundpageComponent,
     // ConfirmationDialogComponent,
     
   ],

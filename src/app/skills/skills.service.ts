@@ -35,5 +35,7 @@ export class SkillsService {
   deleteSkill(id) : Observable <any> {
     return this.http.delete(this.api+'skills/'+id, this.httpOptions)
   }
-  
+  editLevel(id,level){
+    return this.http.put(this.api+'skills/updateLevel/'+id,{level : level}, this.httpOptions)
+  }
 }

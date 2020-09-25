@@ -1,222 +1,264 @@
 <div class="container" *ngIf="Role_Admin_Exist===false" style="min-height: 500px;">
-    <div style="margin-top: 30px;"> 
-         <button  
-         (click)="add()" 
-         mdbWavesEffect 
-         class="flex-left btn font-small bg-dark " 
-         style="color : white ;
+  <div style="margin-top: 30px;">
+    <button (click)="add()" mdbWavesEffect class="flex-left btn font-small bg-dark " style="color : white ;
           right:0px ;
           margin-right: 0px;">Add New Skill</button>
-    </div> 
- 
-   
-   <div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
-         <!-- <mat-form-field>
+  </div>
+
+
+  <div class="example-container mat-elevation-z8" style="margin-bottom: 50px;margin-top: 50px;">
+    <!-- <mat-form-field>
          <mat-label>Skills list </mat-label>
          <input matInput type="text" [(ngModel)]="filterValue"
        (keypress)="filterRights(filterValue)" placeholder="Search Rights By Application name">
        </mat-form-field> -->
-       <div class="spinner-container" *ngIf="!dataSource">
-               <mat-spinner></mat-spinner>
-           </div>
-       
-               <mat-table #table [dataSource]="dataSource" matSort>
-                 <!-- First Column ID-->
-                 <ng-container matColumnDef="id">
-                   <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                   <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-                 </ng-container>
-       
-                 <!-- Second Column -->
-                 <ng-container matColumnDef="name">
-                   <mat-header-cell *matHeaderCellDef mat-sort-header>  Name </mat-header-cell>
-                   <mat-cell *matCellDef="let element"> {{element.skills.name}} </mat-cell>
-                 </ng-container>
-       
-                 <!-- Third Column -->
-                 <ng-container matColumnDef="status" >
-                   <mat-header-cell *matHeaderCellDef mat-sort-header> Status  </mat-header-cell>
-                   <mat-cell *matCellDef="let element">
-                     <div class="form-group" *ngIf="element.status">
-                        <img src="../../assets/inprogress.png" width="50px" height="50px" *ngIf="element.status==='inProgress'">
-                        <img src="../../assets/valid.png" width="50px" height="50px" *ngIf="element.status==='valid'">
-                        <img src="../../assets/notvalid.png" width="50px" height="50px" *ngIf="element.status==='notValid'">
-                        
-                     </div>
-                   </mat-cell>
-                 </ng-container>
-             
-                <!-- Fourth Column -->
-                <ng-container matColumnDef="level">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>  Level </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
-              </ng-container>
-    
-                 <!-- Action Column -->
-            
-                 <ng-container matColumnDef="delete">
-                   <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-                   <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
-                       (click)="delete(element.id)" color="warn">
-                       <mat-icon>delete</mat-icon>
-                     </button> </mat-cell>
-                 </ng-container>
-       
-                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-               </mat-table>
-       
-               <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-       
-             </div>
-     
-         </div>
-   <!---------------------------------------------ADMIN CONTENT------------------------------------------------------->
+    <div class="spinner-container" *ngIf="!dataSource">
+      <mat-spinner></mat-spinner>
+    </div>
 
-         <div class="container" *ngIf="Role_Admin_Exist" style="min-height: 500px;">
-          <div style="margin-top: 30px;"> 
-               <button  
-               (click)="add()" 
-               mdbWavesEffect 
-               class="flex-left btn font-small bg-dark " 
-               style="color : white ;
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <!-- First Column ID-->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <!-- Second Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.skills.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Third Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="form-group" *ngIf="element.status">
+            <img src="../../assets/inprogress.png" width="50px" height="50px" *ngIf="element.status==='inProgress'">
+            <img src="../../assets/valid.png" width="50px" height="50px" *ngIf="element.status==='valid'">
+            <img src="../../assets/notvalid.png" width="50px" height="50px" *ngIf="element.status==='notValid'">
+
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Fourth Column -->
+      <ng-container matColumnDef="level">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Level </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
+            (click)="openEditModal(element)" color="blue">
+            <mat-icon>build</mat-icon>
+          </button> </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+            (click)="delete(element.id)" color="warn">
+            <mat-icon>delete</mat-icon>
+          </button> </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
+<!---------------------------------------------ADMIN CONTENT------------------------------------------------------->
+
+<div class="container" *ngIf="Role_Admin_Exist" style="min-height: 500px;">
+  <div style="margin-top: 30px;">
+    <button (click)="add()" mdbWavesEffect class="flex-left btn font-small bg-dark " style="color : white ;
                 right:0px ;
                 margin-right: 0px;">ADD NEW SKILLS</button>
-          </div> 
-       
-         
-         <div class="example-container mat-elevation-z8"  style="margin-bottom: 50px;margin-top: 50px;">
-               <mat-form-field>
-               <mat-label>SKILLS LIST </mat-label>
-               <input matInput type="text" [(ngModel)]="filterValue"
-             (keypress)="filterRights(filterValue)" placeholder="Search Rights By Application name">
-             </mat-form-field>
-             <div class="spinner-container" *ngIf="!dataSource">
-                     <mat-spinner></mat-spinner>
-                 </div>
-             
-                     <mat-table #table [dataSource]="dataSource" matSort>
-                       <!-- First Column ID-->
-                       <ng-container matColumnDef="id">
-                         <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                         <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-                       </ng-container>
-             
-                       <!-- Second Column -->
-                       <ng-container matColumnDef="name">
-                         <mat-header-cell *matHeaderCellDef mat-sort-header>  Name </mat-header-cell>
-                         <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-                       </ng-container>
-             
-                       <!-- Third Column -->
-                       <ng-container matColumnDef="status" >
-                         <mat-header-cell *matHeaderCellDef mat-sort-header > Status  </mat-header-cell>
-                         <mat-cell *matCellDef="let element" >
-                           <div class="form-group" *ngIf="element.status">
-                              <img src="../../assets/inprogress.png" width="50px" height="50px" *ngIf="element.status==='inProgress'">
-                              <img src="../../assets/valid.png" width="50px" height="50px" *ngIf="element.status==='valid'">
-                              <img src="../../assets/notvalid.png" width="50px" height="50px" *ngIf="element.status==='notValid'">
-                              
-                           </div>
-                         </mat-cell>
-                       </ng-container>
+  </div>
+
+
+  <div class="example-container mat-elevation-z8" style="margin-bottom: 50px;margin-top: 50px;">
+    <mat-form-field>
+      <mat-label>SKILLS LIST </mat-label>
+      <input matInput type="text" [(ngModel)]="filterValue" (keypress)="filterRights(filterValue)"
+        placeholder="Search Rights By Application name">
+    </mat-form-field>
+    <div class="spinner-container" *ngIf="!dataSource">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <!-- First Column ID-->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+
+      <!-- Second Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Third Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="form-group" *ngIf="element.status">
+            <img src="../../assets/inprogress.png" width="50px" height="50px" *ngIf="element.status==='inProgress'">
+            <img src="../../assets/valid.png" width="50px" height="50px" *ngIf="element.status==='valid'">
+            <img src="../../assets/notvalid.png" width="50px" height="50px" *ngIf="element.status==='notValid'">
+
+          </div>
+        </mat-cell>
+      </ng-container>
 
 
 
-                       <!-- Fourth Column -->
-                       <ng-container matColumnDef="level">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>  Level </mat-header-cell>
-                        <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
-                      </ng-container>
-            
-
-                   
-                       <!-- Action Column -->
-                  
-                       <ng-container matColumnDef="delete">
-                         <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
-                         <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
-                             (click)="delete(element.id)" color="warn">
-                             <mat-icon>delete</mat-icon>
-                           </button> </mat-cell>
-                       </ng-container>
-             
-                       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                     </mat-table>
-             
-                     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-             
-                   </div>
-           
-               </div>
-      
-   <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
-   <!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
- 
-   <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-     <div class="modal-dialog" role="document">
-       <div class="modal-content">
-         <div class="modal-header">
-           <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
-             <span aria-hidden="true">×</span>
-           </button>
-           <h4 class="modal-title w-100" id="myModalLabel">ADD NEW SKILLS</h4>
-         </div>
-         <div class="modal-body">
-            
-         
-           <!--  name -->
-           <div class="md-form">
-            <input type="text"
-            placeholder="Pick one"
-            aria-label="Number"
-            matInput
-            [(ngModel)]="name"
-            [formControl]="myControl"
-            [matAutocomplete]="auto">
-            <mat-autocomplete style="  position: relative !important;
-            z-index:100000 !important;"   #auto="matAutocomplete" >
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                {{option}}
-              </mat-option>
-            </mat-autocomplete>
-
-           </div>
-                   
-           <div >
-            <label style="color:red" *ngIf="required">Name required ! </label>
-           </div>
+      <!-- Fourth Column -->
+      <ng-container matColumnDef="level">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Level </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.level}} </mat-cell>
+      </ng-container>
 
 
-           <div class="form-group " >
-            <label for="countryName" class="">LEVEL : </label>
-            <select class="browser-default custom-select" [(ngModel)]="level">
-              <option  value=''>Choose Level</option>
-              <option value="Beginners" >Beginners</option>
-              <option value="Good"> Good </option>
-              <option value="Excellent" > Excellent</option>
-            </select>
-           </div>
-           <div>
-              <label style="color:red" *ngIf="requiredLevel">Level required ! </label>
-           </div>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Edit" class="iconbutton"
+            (click)="openEditModal(element)" color="warn">
+            <mat-icon>build</mat-icon>
+          </button> </mat-cell>
+      </ng-container>
 
 
- 
-         </div>
-         <div class="modal-footer">
-           <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
-           <button 
-           type="button" 
-           mdbBtn 
-           color="primary" 
-           class="relative bg-dark" 
-           (click)="save()" 
-           mdbWavesEffect>Save</button>
-         </div>
-       </div>
-     </div>
-   </div>
-     <!---------------------------------------------MODAL CONTENT------------------------------------------------------->
-   
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Delete </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to Delete" class="iconbutton"
+            (click)="delete(element.id)" color="blue">
+            <mat-icon>delete</mat-icon>
+          </button> </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  </div>
+
+</div>
+
+<!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+<!-- <button type="button" mdbBtn color="primary" class="relative waves-light" >Launch demo modal</button> -->
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">ADD NEW SKILLS</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <!--  name -->
+        <div class="md-form">
+          <input type="text" placeholder="Pick one" aria-label="Number" matInput [(ngModel)]="name"
+            [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete style="  position: relative !important;
+            z-index:100000 !important;" #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+
+        </div>
+
+        <div>
+          <label style="color:red" *ngIf="required">Name required ! </label>
+        </div>
+
+
+        <div class="form-group ">
+          <label for="countryName" class="">LEVEL : </label>
+          <select class="browser-default custom-select" [(ngModel)]="level">
+            <option value=''>Choose Level</option>
+            <option value="Beginners">Beginners</option>
+            <option value="Good"> Good </option>
+            <option value="Excellent"> Excellent</option>
+          </select>
+        </div>
+        <div>
+          <label style="color:red" *ngIf="requiredLevel">Level required ! </label>
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" color="danger" class="btn btn-danger"  aria-label="Close"
+          (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="dark" class="btn btn-dark"  (click)="save()"
+          mdbWavesEffect>Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!---------------------------------------------MODAL CONTENT------------------------------------------------------->
+
+
+<!---------------------------------------------EDIT MODAL CONTENT------------------------------------------------------->
+
+<div mdbModal #EditModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="EditModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">EDIT SKILLS</h4>
+      </div>
+      <div class="modal-body">
+
+
+
+        <div class="form-group ">
+          <label for="countryName" class="">LEVEL : </label>
+          <select class="browser-default custom-select" [(ngModel)]="level">
+            <option value=''>Choose Level</option>
+            <option value="Beginners">Beginners</option>
+            <option value="Good"> Good </option>
+            <option value="Excellent"> Excellent</option>
+          </select>
+        </div>
+        <div>
+          <label style="color:red" *ngIf="requiredLevel">Level required ! </label>
+        </div>
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="danger" class="btn btn-danger" aria-label="Close" (click)="EditModal.hide()"
+          mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="dark" class="btn btn-dark" (click)="edit()"
+          mdbWavesEffect>EDIT</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!---------------------------------------------MODAL CONTENT------------------------------------------------------->

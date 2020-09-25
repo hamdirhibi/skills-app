@@ -52,7 +52,6 @@ export class UsersComponent implements OnInit {
               private skillService : SkillsService,
               private groupService : GroupService,
               private toastr : ToastrService,
-              private route  : ActivatedRoute,
     ) { }
 
   ngAfterViewInit() {
@@ -199,13 +198,7 @@ export class UsersComponent implements OnInit {
     this.managerModal.show() ; 
     }
     async ngOnInit() {
-      let token =  await this.route.snapshot.paramMap.get('id') ; 
-      if (token){
-          localStorage.setItem('accessToken',token)
-        }
-          
-  
-     
+    
         this.sharedService.Me().subscribe(data=>{
         this.Me = data; 
         

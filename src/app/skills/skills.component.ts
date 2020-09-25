@@ -9,6 +9,7 @@ import { SharedService } from '../Services/shared.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-skills',
@@ -16,7 +17,7 @@ import { startWith, map } from 'rxjs/operators';
   styleUrls: ['./skills.component.scss']
 })
 export class SkillsComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'name', 'status','level','delete'];
+  displayedColumns: string[] = ['id', 'name', 'status','level','edit','delete'];
   skills  ; 
   requiredLevel : boolean = false ; 
   level : string = '' ; 
@@ -33,6 +34,8 @@ export class SkillsComponent implements OnInit {
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   @ViewChild(MatSort, {static:false}) sort: MatSort;
   @ViewChild('basicModal', {static:true}) basicModal; 
+  @ViewChild('EditModal', {static:true}) EditModal; 
+
   mapSkills : Map <string , number > = new Map <string , number > () ;
   mapofmyskills : Map <number , boolean > = new Map <number , boolean> () ; 
  
@@ -41,7 +44,9 @@ export class SkillsComponent implements OnInit {
   Role_Admin_Exist : boolean = false ; 
   constructor(private SkillsService : SkillsService,
   private toastr: ToastrService,
-  private sharedService: SharedService)
+  private sharedService: SharedService,
+  private route  : ActivatedRoute,
+  )
   { }
 
   ngAfterViewInit() {
@@ -71,7 +76,14 @@ export class SkillsComponent implements OnInit {
       }
     }
   
-    ngOnInit() {
+    async ngOnInit() {
+      let token =  await this.route.snapshot.paramMap.get('id') ; 
+      if (token){
+          localStorage.setItem('accessToken',token)
+          window.location.replace('/skills')
+          }
+      
+     
       this.load();  
     }
 
@@ -119,8 +131,22 @@ export class SkillsComponent implements OnInit {
   
 
     }
-    showModdal(){
-      
+    openEditModal(element){
+      console.log(element)
+      this.skillId = element.id ; 
+      this.level = element.level ; 
+      this.EditModal.show() ;  
+    }
+    edit() {
+      if (this.level.length===0)
+      {
+        this.requiredLevel = true ;     
+      }
+      this.SkillsService.editLevel(this.skillId, this.level).subscribe(data=>{
+          this.load(); 
+          this.toastr.success('Level succefully updated') ; 
+          this.EditModal.hide(); 
+      }) 
     }
     save() {
 

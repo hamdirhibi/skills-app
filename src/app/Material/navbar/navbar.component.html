@@ -9,10 +9,10 @@
   
       <!-- Links -->
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active" *ngIf="url=='/users'" >
+        <li class="nav-item active" *ngIf="url=='/users'&&MANAGER" >
           <a class="nav-link waves-light" [routerLink]="['/users']" mdbWavesEffect><mdb-icon fas icon="user-cog"></mdb-icon>Users</a>
         </li>
-        <li class="nav-item" *ngIf="url!=='/users'" >
+        <li class="nav-item" *ngIf="url!=='/users'&&MANAGER" >
             <a class="nav-link waves-light" [routerLink]="['/users']" mdbWavesEffect><mdb-icon fas icon="user-cog"></mdb-icon>Users</a>
         </li>
         <!-- <li class="nav-item active" *ngIf="url=='/groups'&&Role_ADMIN_Exist">
